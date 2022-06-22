@@ -5,11 +5,13 @@ from enum import Enum
 
 import src.pymazegen.algos as algos
 import src.pymazegen.algos.config as config
-from .maze import Grid, CircGrid
+from src.pymazegen.maze import Grid, CircGrid
 from .presenter import *
 
 
 class Algo(Enum):
+    """The parameter taken by build_maze() function. It defines the algorithm to be used
+    for maze generation."""
     BINARY_TREE = 0
     SIDEWINDER = 1
     RECURSIVE_BACKTRACKING = 2
@@ -26,7 +28,7 @@ class Algo(Enum):
 algo_str: list = [
     "binary_tree",
     "sidewinder",
-    "recursive_backtracking_",
+    "recursive_backtracking",
     "prim",
     "kruskal",
     "eller",
@@ -39,6 +41,8 @@ algo_str: list = [
 
 
 class Mode(Enum):
+    """The parameter taken by the init_maze() function. It defines the maze type
+    (RECTANGULAR or CIRCULAR) that will be generated."""
     RECT = 0
     RECTANGULAR = 1
     CIRC = 2
@@ -46,8 +50,8 @@ class Mode(Enum):
 
 
 def get_maze() -> Grid:
-    """Returns the maze in its raw format = a python object representing the maze internally
-    in the 'pymazegen' package."""
+    """Returns the maze in its raw format = a python object representing the maze
+    internally in the 'pymazegen' package."""
     return config.grid
 
 
@@ -61,7 +65,8 @@ def init_maze(height: int, width: int = 0, *, mode: str | Mode = Mode.RECT) -> N
         For a circular maze this parameter is irrelevant; the length of each row
         (number of cells per row) is defined by a ratio factor -> cell width ~ cell height.
     :param str | Mode mode: a switch to build rectangular or circular mazes.
-    :return: None. The initialised maze can be accessed through other functions, such as 'get_maze()'.
+    :return: None. The initialised maze can be accessed through other functions, such as
+        'get_maze()'.
     """
     if any(mode == m for m in [Mode.RECT, Mode.RECTANGULAR, 'rect', 'rectangular']):
         if width == 0: width = height
@@ -95,13 +100,14 @@ def _reinit_maze() -> None:
     if config.grid is not None:
         init_maze(config.height, config.width, mode=config.mode)
     else:
-        pass
+        init_maze(20)
 
 
 def build_maze(*, algo: str | Algo = Algo.RECURSIVE_BACKTRACKING, anim: bool = False) -> None:
     """
     Generates a random maze using one of the selected algorithms.
-    If option 'anim' is ticked it logs the build steps - can produce animation using 'save_anim()'.
+    If option 'anim' is ticked it logs the build steps - can produce animation using
+    'save_anim()'.
 
     .. note::
         - When used repeatedly it rewrites the previous maze.
@@ -120,8 +126,10 @@ def build_maze(*, algo: str | Algo = Algo.RECURSIVE_BACKTRACKING, anim: bool = F
         RECURSIVE_DIVISION,
         GROWING_TREE - Not yet implemented
         ]
-    :param bool anim: if set to 'True' the build steps are logged. Set to 'False' by default.
-    :return: None. The final maze can be accessed through other functions, such as 'get_maze()'.
+    :param bool anim: if set to 'True' the build steps are logged.
+        Set to 'False' by default.
+    :return: None. The final maze can be accessed through other functions,
+        such as 'get_maze()'.
     """
     _validate_param(algo)
     _reinit_maze()
@@ -132,7 +140,7 @@ def build_maze(*, algo: str | Algo = Algo.RECURSIVE_BACKTRACKING, anim: bool = F
         Algo.SIDEWINDER: algos.sidewinder_,
         "sidewinder": algos.sidewinder_,
         Algo.RECURSIVE_BACKTRACKING: algos.recursive_backtracking_,
-        "recursive_backtracking_": algos.recursive_backtracking_,
+        "recursive_backtracking": algos.recursive_backtracking_,
         Algo.PRIM: algos.prim_,
         "prim": algos.prim_,
         Algo.KRUSKAL: algos.kruskal_,

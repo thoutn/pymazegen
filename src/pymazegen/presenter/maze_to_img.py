@@ -14,7 +14,7 @@ def img_config(*, cell_size: int = 20, wall_thickness: int = 2) -> None:
     """
     Configures the graphical representation of the generated maze.
 
-    :param int cell_size: the area (a x a) of the cell used for the maze visualisation;
+    :param int cell_size: the height of the cell used for the maze visualisation;
     :param int wall_thickness: the line thickness the wall is drawn with.
     :return: None.
     """
@@ -116,9 +116,9 @@ def _render_img() -> Image:
 
 def show_img() -> None:
     """
-    Renders and shows the generated image of the maze in a pop-up window.
+    Renders the generated image of the maze in a pop-up window.
 
-    **Note:**
+    .. note::
         - To change the graphical representation of the maze use 'img_config()'.
 
     :return: None.
@@ -131,7 +131,7 @@ def save_img(filename: str) -> None:
     """
     Saves the generated image of the maze.
 
-    **Note:**
+    .. note::
         - The output file format is PNG by default.
         - To change the graphical representation of the maze use 'img_config()'.
 

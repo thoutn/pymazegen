@@ -5,6 +5,7 @@ from src.pymazegen.maze import Cell
 
 
 def _save_step(c: Cell, n: Cell, stack: list = tuple(), col: str = 'r') -> None:
+    """Saves the build steps that are used ot generate an animation."""
     if col == 'w':
         if stack:
             n = stack[-1]
@@ -20,7 +21,8 @@ def build_maze(anim: bool = False) -> None:
     while stack:
         current_cell = stack[-1]
 
-        if neighbours := [cell for cell in current_cell.neighbours() if not cell.has_linked_cells()]:
+        if neighbours := [cell for cell in current_cell.neighbours()
+                          if not cell.has_linked_cells()]:
             random.shuffle(neighbours)
             neighbour = neighbours.pop()
 

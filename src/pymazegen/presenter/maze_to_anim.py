@@ -125,7 +125,7 @@ def save_anim(filename: str, mspf: int = 300) -> None:
     Renders and saves an animation of the building process of the maze.
     Creates a visual representation of the selected mazegen algorithm.
 
-    **Note:**
+    .. note::
         * The output file format is GIF by default.
         * To change the graphical representation of the maze use 'img_config()'.
 

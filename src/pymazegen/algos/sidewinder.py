@@ -10,7 +10,8 @@ def build_maze(anim: bool = False) -> None:
         for cell in row:
             run.append(cell)
 
-            is_place_to_close_run = cell.right is None or cell.top is not None and random.randrange(0, 2) == 0
+            is_place_to_close_run = (cell.right is None or cell.top is not None
+                                     and random.randrange(0, 2) == 0)
 
             if is_place_to_close_run:
                 cell_ = random.choice(run)

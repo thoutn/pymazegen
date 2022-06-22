@@ -12,10 +12,12 @@ def build_maze(anim: bool = False) -> None:
         current_cell = random.choice(list(frontier_cells))
         frontier_cells.remove(current_cell)
 
-        if neighbours := {cell for cell in current_cell.neighbours() if not cell.has_linked_cells()}:
+        if neighbours := {cell for cell in current_cell.neighbours()
+                          if not cell.has_linked_cells()}:
             frontier_cells = frontier_cells | neighbours
 
-        if in_cells := [cell for cell in current_cell.neighbours() if cell.has_linked_cells()]:
+        if in_cells := [cell for cell in current_cell.neighbours()
+                        if cell.has_linked_cells()]:
             in_cell = random.choice(in_cells)
             in_cell.link_to(current_cell)
         else:

@@ -1,10 +1,14 @@
+from __future__ import annotations
+
+
 import random
 
 import src.pymazegen.algos.config as config
 from src.pymazegen.maze import Cell, Grid, CircGrid
 
 
-def _get_tree_index(cell: Cell, container: list) -> int:
+def _get_tree_index(cell: Cell, container: list) -> int | None:
+    """Returns the index of tree set the cell belongs to."""
     assert container is not None
 
     for i, set_ in enumerate(container):
@@ -13,6 +17,8 @@ def _get_tree_index(cell: Cell, container: list) -> int:
 
 
 def _create_link_to_next_row(tree_set: set) -> set[Cell]:
+    """Randomly selects a random number of cells and links them to their bottom neighbour
+    while adding them to a new set."""
     tree_set = list(tree_set)
     random.shuffle(tree_set)
     new_set = set()
@@ -57,11 +63,13 @@ def build_maze(anim: bool = False) -> None:
                     if is_to_be_joined:
                         i_l = _get_tree_index(cell.left, tree_sets)
 
-                        # In CircGrid the far left neighbour (left neighbour of first cell in the row)
+                        # In CircGrid the left neighbour of the first cell in row
                         # is the last cell in row - the rows are circular linked lists.
-                        # Therefore, _get_tree_index() returns None, this would crash the code below
-                        # at the set union, invoking:
-                        # 'TypeError: list indices must be integers or slices, not NoneType'
+                        # Therefore, _get_tree_index() might return None as the last cell
+                        # may not belong to any set at the time.
+                        # This would crash the code below at the set union, invoking:
+                        # 'TypeError: list indices must be integers or slices,
+                        #             not NoneType'
                         if i_l is None:
                             continue
 

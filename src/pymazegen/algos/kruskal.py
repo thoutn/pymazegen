@@ -5,11 +5,14 @@ from src.pymazegen.maze import Cell, Grid, CircGrid
 
 
 def build_maze(anim: bool = False) -> None:
-    tree_sets: dict[Cell, set[Cell]] = {cell: {cell} for cell in config.grid.get_next_cell()}
+    tree_sets: dict[Cell, set[Cell]] = {cell: {cell}
+                                        for cell in config.grid.get_next_cell()}
     if type(config.grid) == Grid:
-        walls = [(c_, n_) for c_ in config.grid.get_next_cell() for n_ in (c_.bottom, c_.right) if n_]
+        walls = [(c_, n_) for c_ in config.grid.get_next_cell()
+                 for n_ in (c_.bottom, c_.right) if n_]
     elif type(config.grid) == CircGrid:
-        walls = [(c_, n_) for c_ in config.grid.get_next_cell() for n_ in [c_.right] + [b for b in c_.bottom] if n_]
+        walls = [(c_, n_) for c_ in config.grid.get_next_cell()
+                 for n_ in [c_.right] + [b for b in c_.bottom] if n_]
 
     set_count = config.grid.size
     random.shuffle(walls)
